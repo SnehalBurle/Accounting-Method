@@ -61,12 +61,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     multipopButton.addEventListener('click', () => {
-        const popCount = Math.floor(Math.random() * (stack.length + 1));
-        for (let i = 0; i < popCount; i++) {
-            if (stack.length > 0) {
-                const popped = stack.pop();
-                updateCalculations('Multipop', 1, 0, -popped.credit);
-            }
+        if (stack.length === 0) {
+            alert('Stack is empty! No elements to pop.');
+            return;
+        }
+
+        const popCount = parseInt(prompt("Enter the number of elements to pop: "), 10);
+        if (isNaN(popCount) || popCount < 0) {
+            alert("Please enter a valid number!");
+            return;
+        }
+
+        for (let i = 0; i < popCount && stack.length > 0; i++) {
+            const popped = stack.pop();
+            updateCalculations('Multipop', -1, -1, -popped.credit);
         }
         renderStack();
     });
